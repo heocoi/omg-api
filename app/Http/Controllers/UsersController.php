@@ -60,17 +60,26 @@ class UsersController extends Controller
         }
 
         $user = User::find($id);
-        $user->first_name = Input::get('first_name');
-        $user->last_name = Input::get('last_name');
-        $user->country = Input::get('country');
-        $user->age = Input::get('age');
-        $user->gender = Input::get('gender');
-        $user->type = Input::get('type');
-        $user->language = Input::get('language');
-        $user->introduction = Input::get('introduction');
+        if (Input::has('first_name')) $user->first_name = Input::get('first_name');
+        if (Input::has('last_name')) $user->last_name = Input::get('last_name');
+        if (Input::has('country')) $user->country = Input::get('country');
+        if (Input::has('age')) $user->age = Input::get('age');
+        if (Input::has('gender')) $user->gender = Input::get('gender');
+        if (Input::has('type')) $user->type = Input::get('type');
+        if (Input::has('language')) $user->language = Input::get('language');
+        if (Input::has('introduction')) $user->introduction = Input::get('introduction');
+        if (Input::has('latitude')) $user->latitude = Input::get('latitude');
+        if (Input::has('longitude')) $user->longitude = Input::get('longitude');
+        if (Input::has('is_sharing_location')) $user->is_sharing_location = Input::get('is_sharing_location');
+        if (Input::has('receive_notifications')) $user->receive_notifications = Input::get('receive_notifications');
         $user->save();
         return Response::json(compact('user'), 200);
+    }
 
+    public function getSharingLocationUsers()
+    {
+        $users = User::where('is_sharing_location', true)->get();
+        return Response::json(compact('users'), 200);
     }
 
 }

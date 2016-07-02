@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration {
 			$table->boolean('type');
 			$table->string('password', 60);
 			$table->longText('introduction');
+			$table->float('latitude');
+			$table->float('longitude');
+			$table->boolean('is_sharing_location');
+			$table->boolean('receive_notifications');
 			$table->rememberToken();
 			$table->timestamps();
 		});
