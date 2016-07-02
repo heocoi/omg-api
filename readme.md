@@ -8,6 +8,10 @@ Project we created when joined SB Cloud Hackathon 20160702-03
 * LAMP
 * Laravel5 framework
 
+### Libraries
+* [composer.json](https://github.com/heocoi/omg-api/blob/master/composer.json)
+
+
 ### Environment
 
 #### Requirements
