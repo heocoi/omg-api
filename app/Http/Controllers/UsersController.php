@@ -35,10 +35,11 @@ class UsersController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            $requests = $user->requests;
         } catch (ModelNotFoundException $e) {
             return Response::json(['error' => 'User with ID: ' . $id . ' was not found.'], 404);
         }
-        return Response::json(compact('user'), 200);
+        return Response::json(compact('user', 'requests'), 200);
     }
 
     public function getRequestsByUser($id)

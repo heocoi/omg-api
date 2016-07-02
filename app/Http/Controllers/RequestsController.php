@@ -26,6 +26,7 @@ class RequestsController extends Controller
     {
         try {
             $request = Request::findOrFail($id);
+            $author = $request->load('author');
         } catch (ModelNotFoundException $e) {
             return Response::json(['error' => 'The request with ID: ' . $id . ' was not found.'], 404);
         }
@@ -66,7 +67,7 @@ class RequestsController extends Controller
         $request->start_time = Input::get('start_time');
         $request->end_time = Input::get('end_time');
         $request->place = Input::get('place');
-        $request->description = Input::get('category_id');
+        $request->description = Input::get('description');
         $request->save();
 
         return Response::json(compact('request'), 200);
