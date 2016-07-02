@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -19,3 +18,24 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+
+Route::post('api/signup', 'Auth\AuthController@signup');
+Route::post('api/login', 'Auth\AuthController@login');
+
+Route::get('api/users', 'UsersController@index');
+Route::get('api/users/{id}', 'UsersController@show');
+Route::get('api/users/{id}/requests', 'UsersController@getRequestsByUser');
+
+Route::get('api/threads', 'MessagesController@index');
+Route::get('api/threads/participants/{id}', 'MessagesController@threadsByParticipants');
+Route::post('api/threads', 'MessagesController@store');
+Route::get('api/threads/{id}', 'MessagesController@show');
+Route::post('api/threads/{id}', 'MessagesController@update');
+
+Route::get('api/requests', 'RequestsController@index');
+Route::get('api/requests/{id}', 'RequestsController@show');
+Route::post('api/requests', 'RequestsController@store');
+Route::post('api/requests/{id}', 'RequestsController@update');
+
+Route::get('api/requestCategories', 'RequestCategoriesController@index');

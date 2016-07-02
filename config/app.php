@@ -135,6 +135,10 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+		'Barryvdh\Cors\CorsServiceProvider',
+		'Cmgmyr\Messenger\MessengerServiceProvider',
+		'Vinkla\Pusher\PusherServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -193,6 +197,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
+		'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+		'LaravelPusher' => 'Vinkla\Pusher\Facades\Pusher',
 	],
 
 ];
