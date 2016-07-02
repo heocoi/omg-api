@@ -26,6 +26,7 @@ Route::post('api/login', 'Auth\AuthController@login');
 Route::get('api/users', 'UsersController@index');
 Route::get('api/users/{id}', 'UsersController@show');
 Route::get('api/users/{id}/requests', 'UsersController@getRequestsByUser');
+Route::post('api/users/{id}/profile', 'UsersController@updateProfileByUser');
 
 Route::get('api/threads', 'MessagesController@index');
 Route::get('api/threads/participants/{id}', 'MessagesController@threadsByParticipants');
