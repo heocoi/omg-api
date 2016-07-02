@@ -48,6 +48,7 @@ class UsersController extends Controller
         }
 
         $requests = User::find($id)->requests;
+        $requests->load('author');
         return Response::json(compact('requests'), 200);
     }
 
