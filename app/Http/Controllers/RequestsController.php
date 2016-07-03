@@ -2,10 +2,14 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Request;
+use App\User;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Input;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Log;
+use LaravelPusher;
+
 
 class RequestsController extends Controller
 {
@@ -48,6 +52,8 @@ class RequestsController extends Controller
             'author_id' => $this->currentUser->id
         ]);
 
+        $this->oooPushIt($request);
+
         return Response::json($request, 200);
     }
 
@@ -71,5 +77,31 @@ class RequestsController extends Controller
         $request->save();
 
         return Response::json(compact('request'), 200);
+    }
+
+    /**
+     * Send the new message to Pusher in order to notify users.
+     *
+     * @param Message $message
+     */
+    protected function oooPushIt(Request $request)
+    {
+        $request->load('author', 'category');
+        // Log::info(json_encode($request));
+        $data = [
+            'request_id' => $request->id,
+            'author' => $request->author,
+            'notify' => $request->author->email . " said \"" . $request->category->title . "\""
+        ];
+        $recipients = User::where('receive_notifications', true)->get();
+        if (count($recipients) > 0) {
+            foreach ($recipients as $recipient) {
+                if ($recipient->id == $request->author->id) {
+                    continue;
+                }
+                LaravelPusher::trigger('for_user_' . $recipient->id, 'new_request', $data);
+                // Log::info($recipient->id);
+            }
+        }
     }
 }

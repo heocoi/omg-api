@@ -13,4 +13,9 @@ class Request extends Model {
 		return $this->belongsTo('App\User', 'author_id');
 	}
 
+	public function category()
+	{
+		return $this->belongsTo('App\RequestCategory', 'category_id');
+	}
+
 }
