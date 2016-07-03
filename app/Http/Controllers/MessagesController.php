@@ -31,15 +31,18 @@ class MessagesController extends Controller
      */
     public function index()
     {
+        $threads = [];
         $currentUserId = $this->currentUser->id;
         $threads = Thread::forUser($currentUserId)->get();
 
-        foreach ($threads as &$thread) {
-            // get last message
-            $thread['last_message'] = $thread->getLatestMessageAttribute();
-            // get email of participant (not current user)
-            $thread['partner'] = $thread->participantsString($currentUserId, ['email']);
-            $thread['userUnreadMessagesCount'] = $thread->userUnreadMessagesCount($currentUserId);
+        if (count($threads)) {
+            foreach ($threads as &$thread) {
+                // get last message
+                $thread['last_message'] = $thread->getLatestMessageAttribute();
+                // get email of participant (not current user)
+                $thread['partner'] = $thread->participantsString($currentUserId, ['email']);
+                $thread['userUnreadMessagesCount'] = $thread->userUnreadMessagesCount($currentUserId);
+            }
         }
 
         return Response::json(compact('threads', 'currentUserId'), 200);
